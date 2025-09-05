@@ -7,6 +7,7 @@
 //
 
 import Defaults
+import Factory
 import JellyfinAPI
 import Logging
 import SwiftUI
@@ -20,6 +21,9 @@ extension ItemView {
 
         @Router
         private var router
+
+        @Injected(\.downloadManager)
+        private var downloadManager
 
         @ObservedObject
         var viewModel: ItemViewModel
@@ -109,14 +113,22 @@ extension ItemView {
                 playButtonItem.userData?.playbackPositionTicks = 0
             }
 
-            router.route(
-                to: .videoPlayer(
-                    manager: OnlineVideoPlayerManager(
-                        item: playButtonItem,
-                        mediaSource: selectedMediaSource
+            if let task = downloadManager.task(for: playButtonItem), case .complete = task.state {
+                router.route(
+                    to: .videoPlayer(
+                        manager: DownloadVideoPlayerManager(downloadTask: task)
                     )
                 )
-            )
+            } else {
+                router.route(
+                    to: .videoPlayer(
+                        manager: OnlineVideoPlayerManager(
+                            item: playButtonItem,
+                            mediaSource: selectedMediaSource
+                        )
+                    )
+                )
+            }
         }
     }
 }

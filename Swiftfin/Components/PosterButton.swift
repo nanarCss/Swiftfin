@@ -243,6 +243,12 @@ extension PosterButton {
                         FavoriteIndicator(size: 25)
                             .isVisible(showFavorited)
                     }
+
+                    if (item.type == .movie || item.type == .series),
+                       let rating = item.communityRating
+                    {
+                        RatingIndicator(rating: rating)
+                    }
                 }
             }
         }
