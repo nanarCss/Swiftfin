@@ -65,10 +65,14 @@ extension HomeView {
                 }
             }
             .posterOverlay(for: BaseItemDto.self) { item in
-                LandscapePosterProgressBar(
-                    title: item.progressLabel ?? L10n.continue,
-                    progress: (item.userData?.playedPercentage ?? 0) / 100
-                )
+                ZStack(alignment: .topLeading) {
+                    PosterButton<BaseItemDto>.DefaultOverlay(item: item)
+
+                    LandscapePosterProgressBar(
+                        title: item.progressLabel ?? L10n.continue,
+                        progress: (item.userData?.playedPercentage ?? 0) / 100
+                    )
+                }
             }
         }
     }
