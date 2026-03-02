@@ -1,0 +1,30 @@
+<joblist>
+  <job>
+    <name>01_Test_SCM_Job</name>
+    <description>Un job d'exemple simple pour valider la synchronisation Git/SCM.</description>
+    <group>Exemples/Tests</group>
+    <loglevel>INFO</loglevel>
+    <executionEnabled>true</executionEnabled>
+    <scheduleEnabled>true</scheduleEnabled>
+    <defaultTab>nodes</defaultTab>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    
+    <sequence keepgoing='false' strategy='node-first'>
+      
+      <command>
+        <exec>echo "🚀 Bonjour depuis Rundeck ! La synchro SCM fonctionne."</exec>
+      </command>
+      
+      <command>
+        <script><![CDATA[#!/bin/bash
+echo "--- Informations système ---"
+echo "Date : $(date)"
+echo "Utilisateur courant : $(whoami)"
+echo "Répertoire de travail : $(pwd)"
+echo "----------------------------"
+]]></script>
+      </command>
+      
+    </sequence>
+  </job>
+</joblist>
